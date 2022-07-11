@@ -1,0 +1,146 @@
+body {
+    background-color: #1B1B1B;
+    overflow: scroll;
+    // padding: 3rem 6rem;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.search-field {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    &.animating {
+        transform: translate(-50%, -25rem);
+    }
+    input {
+        font-size: 3rem;
+        padding: 1rem 2rem;
+        background: transparent;
+        color: #FDFDFD;
+        background-color: #fdfdfd24;
+        border: none;
+        border-radius: 0.4rem;
+        outline: none;
+        transition: 0.1s all;
+        font-family: "Poppins";
+    }
+    
+}
+.suggestions {
+    position: absolute;
+    top: 60%;
+    max-height: 300px;
+    width: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: #1B1B1B;
+    box-shadow: -9px -5px 10px 10px rgba(0, 0, 0, 0.1),8px 16px 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.4rem;
+    padding: 1rem 0;
+    z-index: 1;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    .title {
+        // margin-bottom: 1.5rem;
+        padding: 0.75rem 2.5rem;
+        color: #FDFDFD;
+        &:hover {
+            background-color: #fdfdfd24;
+            cursor: pointer;
+        }
+    }
+}
+
+.movie-results {
+    position: absolute;
+    max-width: calc(100% - 12rem);
+    padding: 3rem 6rem;
+    display: flex;
+    column-gap: 2rem;
+    row-gap: 3rem;
+    flex-direction: column;
+    margin-top: 15rem;
+    z-index: -1;
+    h2 {
+        color: #FDFDFD;
+        font-family: "Poppins";
+        margin-bottom: 0;
+        font-style: italic;
+    }
+    &>div {
+        display: flex;
+        flex-direction: row;
+        column-gap: 2rem;
+        overflow-x: scroll;
+        &::-webkit-scrollbar {
+            display: none;
+        }
+        .movie-card {
+            position: relative;
+            min-width: 20rem;
+            img {
+                width: 100%;
+                height: 100%;
+            }
+            .info {
+                position: absolute;
+                padding: 3rem 1rem;
+                box-sizing: border-box;
+                padding-bottom: 3rem;
+                bottom: 0;
+                height: 40%;
+                transition: 0.3s all;
+                background-image: linear-gradient(to bottom, transparent, #000);
+                width: 100%;
+                font-family: 'Poppins';
+                color: #FDFDFD;
+                h4 {
+                    position: absolute;
+                    bottom: 1rem;
+                    width: 90%;
+                }
+                p, .genres, a {
+                    display: none;
+                }
+            }
+            &:hover {
+                .info {
+                    height: 100%;   
+                }
+                img {
+                filter: brightness(0.4); 
+                }
+                p, .genres, a {
+                    display: block;
+                }
+                h4 {
+                    position: relative;
+                }
+            }
+            button {
+                margin-top: 0.8rem;
+                padding: 0.5rem 0.8rem;
+                font-family: 'Poppins';
+            }
+        }
+    }
+}
+
+@keyframes moveFieldUp {
+    0% {
+        transform: 0;
+    }
+    100% {
+        transform: translateY(-20%);
+    }
+}
