@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+
+import _map from 'lodash/map';
+
 import { Button } from "../Components/Button";
 import { Card } from "../Components/Card";
 import { Link } from "react-router-dom";
+
 import "./Home.scss";
 
 export function Home() {
@@ -12,6 +16,15 @@ export function Home() {
     { name: "The Like Tree", link: "/theliketree" },
     { name: "Search similar", link: "/searchsimilar" },
   ];
+
+  const renderMovieOptions = options => _map(options, (option, index) => (
+      <div key={index} onClick={() => setCardIndex(index)}>
+        <Card
+            name={option.name}
+            class={selectedCardIndex === index ? "activated" : ""}
+        />
+      </div>
+  ));
   // , "Your Picks"
   return (
     <div className="home-body">
@@ -20,16 +33,7 @@ export function Home() {
         <div
           className={`options ${selectedCardIndex === -1 ? "" : "animating"}`}
         >
-          {options.map((option, index) => {
-            return (
-              <div key={index} onClick={() => setCardIndex(index)}>
-                <Card
-                  name={option.name}
-                  class={selectedCardIndex === index ? "activated" : ""}
-                />
-              </div>
-            );
-          })}
+          {renderMovieOptions(options)}
         </div>
         <div
           className={`button ${
