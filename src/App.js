@@ -1,8 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import { Home } from "./Containers/Home/Home";
-import { Movie } from "./Containers/Movie/Movie";
-import SimilarMovies from "./Containers/SimilarMovies/SimilarMovies";
+import { Home } from "./Components/Home/Home";
+import Movie from './Components/Movie/Movie';
+import SimilarMovies from "./Components/SimilarMovies/SimilarMovies";
 
 import "./App.css";
 
