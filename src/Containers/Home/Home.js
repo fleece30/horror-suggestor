@@ -2,20 +2,16 @@ import React, { useState } from "react";
 
 import _map from 'lodash/map';
 
-import { Button } from "../Components/Button";
-import { Card } from "../Components/Card";
+import { Button } from "../../Components/Button";
+import { Card } from "../../Components/Card";
 import { Link } from "react-router-dom";
+
+import { options } from './home.constants';
 
 import "./Home.scss";
 
 export function Home() {
   const [selectedCardIndex, setCardIndex] = useState(-1);
-  const options = [
-    { name: "Random", link: "/randommovies" },
-    { name: "Search", link: "/search" },
-    { name: "The Like Tree", link: "/theliketree" },
-    { name: "Search similar", link: "/searchsimilar" },
-  ];
 
   const renderMovieOptions = options => _map(options, (option, index) => (
       <div key={index} onClick={() => setCardIndex(index)}>

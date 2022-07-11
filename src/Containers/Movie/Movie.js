@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import "./Movie.scss";
-const movieData = require("./movies.json");
+const movieData = require("../../Assets/movies.json");
 
 export function Movie() {
   const [movie, setMovie] = useState({});
