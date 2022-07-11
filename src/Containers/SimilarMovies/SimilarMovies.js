@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import "./SimilarMovies.scss";
-import { Button } from "../Components/Button";
+import { Button } from "../../Components/Button";
 import axios from "axios";
 
-const movieData = require("./movies.json");
+const movieData = require("../../Assets/movies.json");
 export default function SimilarMovies() {
   const [searchTerm, setSearchterm] = useState("");
   const [suggestions, setSuggestions] = useState([]);

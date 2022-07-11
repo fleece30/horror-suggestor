@@ -137,9 +137,6 @@ body {
 }
 
 @keyframes moveFieldUp {
-    0% {
-        transform: 0;
-    }
     100% {
         transform: translateY(-20%);
     }
