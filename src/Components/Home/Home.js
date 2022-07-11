@@ -2,8 +2,8 @@ import React, { useState } from "react";
 
 import _map from 'lodash/map';
 
-import { Button } from "../../Components/Button";
-import { Card } from "../../Components/Card";
+import { Button } from "../Button/Button";
+import { Card } from "../Card/Card";
 import { Link } from "react-router-dom";
 
 import { options } from './home.constants';

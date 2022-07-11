@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./SimilarMovies.scss";
-import { Button } from "../../Components/Button";
+import { Button } from "../Button/Button";
 import axios from "axios";
 
 const movieData = require("../../Assets/movies.json");
