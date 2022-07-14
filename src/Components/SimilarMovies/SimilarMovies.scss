@@ -71,66 +71,68 @@ body {
     flex-direction: column;
     margin-top: 15rem;
     z-index: -1;
-    h2 {
-        color: #FDFDFD;
-        font-family: "Poppins";
-        margin-bottom: 0;
-        font-style: italic;
-    }
     &>div {
-        display: flex;
-        flex-direction: row;
-        column-gap: 2rem;
-        overflow-x: scroll;
-        &::-webkit-scrollbar {
-            display: none;
+        h2 {
+            color: #FDFDFD;
+            font-family: "Poppins";
+            margin-bottom: 1rem;
+            font-style: italic;
         }
-        .movie-card {
-            position: relative;
-            min-width: 20rem;
-            img {
-                width: 100%;
-                height: 100%;
+        &>div {
+            display: flex;
+            flex-direction: row;
+            column-gap: 2rem;
+            overflow-x: scroll;
+            &::-webkit-scrollbar {
+                display: none;
             }
-            .info {
-                position: absolute;
-                padding: 3rem 1rem;
-                box-sizing: border-box;
-                padding-bottom: 3rem;
-                bottom: 0;
-                height: 40%;
-                transition: 0.3s all;
-                background-image: linear-gradient(to bottom, transparent, #000);
-                width: 100%;
-                font-family: 'Poppins';
-                color: #FDFDFD;
-                h4 {
-                    position: absolute;
-                    bottom: 1rem;
-                    width: 90%;
-                }
-                p, .genres, a {
-                    display: none;
-                }
-            }
-            &:hover {
-                .info {
-                    height: 100%;   
-                }
+            .movie-card {
+                position: relative;
+                min-width: 20rem;
                 img {
-                filter: brightness(0.4); 
+                    width: 100%;
+                    height: 100%;
                 }
-                p, .genres, a {
-                    display: block;
+                .info {
+                    position: absolute;
+                    padding: 3rem 1rem;
+                    box-sizing: border-box;
+                    padding-bottom: 3rem;
+                    bottom: 0;
+                    height: 40%;
+                    transition: 0.3s all;
+                    background-image: linear-gradient(to bottom, transparent, #000);
+                    width: 100%;
+                    font-family: 'Poppins';
+                    color: #FDFDFD;
+                    h4 {
+                        position: absolute;
+                        bottom: 1rem;
+                        width: 90%;
+                    }
+                    p, .genres, a {
+                        display: none;
+                    }
                 }
-                h4 {
-                    position: relative;
+                &:hover {
+                    .info {
+                        height: 100%;   
+                    }
+                    img {
+                    filter: brightness(0.4); 
+                    }
+                    p, .genres, a {
+                        display: block;
+                    }
+                    h4 {
+                        position: relative;
+                    }
                 }
-            }
-            button {
-                margin-top: 0.8rem;
-                padding: 0.5rem 0.8rem;
-                font-family: 'Poppins';
+                button {
+                    margin-top: 0.8rem;
+                    padding: 0.5rem 0.8rem;
+                    font-family: 'Poppins';
+                }
             }
         }
     }

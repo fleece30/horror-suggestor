@@ -1,108 +1,55 @@
 import React, { useState, useEffect } from "react";
-import "./SimilarMovies.scss";
+import _isEmpty from "lodash/isEmpty";
+import withState from "../../Containers/withState/withState";
+import SIMILAR_MOVIE_ACTIONS from "./SimilarMovie.action";
+import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
 import { Button } from "../Button/Button";
-import axios from "axios";
+
+import "./SimilarMovies.scss";
 
 const movieData = require("../../Assets/movies.json");
-export default function SimilarMovies() {
+
+const SimilarMovies = (props) => {
+  const { isLoaded, movieResults, movieDetails, onAction } = props;
+
   const [searchTerm, setSearchterm] = useState("");
   const [suggestions, setSuggestions] = useState([]);
-  const [movieResults, setMovieResults] = useState([]);
-  const [movieDetails, setMovieDetails] = useState([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  const [showingSuggestions, setShowingSuggestions] = useState(false);
   const [isAnimating, setAnimating] = useState(false);
 
-  useEffect(() => {
-    setSuggestions(
-      movieData.filter((movie) =>
-        movie.title.toLowerCase().includes(searchTerm)
-      )
+  const handleChange = (e) => {
+    setSearchterm(e.target.value);
+    const sugg = movieData.filter((movie) =>
+      movie.title.toLowerCase().includes(e.target.value.toLowerCase())
     );
-    return () => {};
-  }, [searchTerm]);
+    setSuggestions(sugg);
+    setShowingSuggestions(true);
+  };
 
   const fetchRecommendations = () => {
-    setMovieResults([]);
-    setMovieDetails([]);
     if (!isAnimating) setAnimating(true);
-    const limitedTerm = searchTerm.replace(" ", "+");
-    axios
-      .get(
-        `https://getrec.herokuapp.com/getrecommendations?name=${limitedTerm}`
-      )
-      .then(({ data }) => {
-        const cast_array = data[1].filter((val) => !data[0].includes(val));
-        data.pop();
-        data.push(cast_array);
-        setMovieResults(data);
-      })
-      .catch((err) => console.log(err));
+    onAction(
+      SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION,
+      searchTerm
+    );
   };
 
   useEffect(() => {
-    const getMovieDetails = async () => {
-      for (var j in movieResults) {
-        for (var i of movieResults[j]) {
-          await axios
-            .get(
-              `https://api.themoviedb.org/3/movie/${i}?api_key=${process.env.REACT_APP_dbKey}`
-            )
-            .then(({ data }) => {
-              setMovieDetails((movieDetails) => [...movieDetails, data]);
-            })
-            .catch((err) => console.log(err));
-        }
-      }
-      setIsLoaded(true);
-    };
-    if (movieResults.length !== 0) getMovieDetails();
-    return () => {};
-  }, [movieResults]);
+    if (movieResults !== undefined && !_isEmpty(movieResults))
+      onAction(
+        SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION,
+        movieResults
+      );
+  }, [movieResults]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  return (
-    <div>
-      <div className={`search-field ${isAnimating ? "animating" : ""}`}>
-        <input
-          type="text"
-          className={
-            searchTerm !== "" && suggestions.length !== 0 ? "textPresent" : ""
-          }
-          value={searchTerm}
-          onChange={(e) => setSearchterm(e.target.value)}
-        />
-        <div
-          className="suggestions"
-          style={{
-            display:
-              suggestions.length === 0 ||
-              suggestions.length === movieData.length
-                ? "none"
-                : "block",
-          }}
-        >
-          {suggestions.map((movie, index) => {
-            return (
-              <div
-                key={index}
-                className="title"
-                onClick={() => {
-                  setSearchterm(movie.title);
-                  setSuggestions([]);
-                }}
-              >
-                {movie.title}
-              </div>
-            );
-          })}
-        </div>
-        <Button text="Search" onClick={() => fetchRecommendations()} />
-      </div>
-      <div className="movie-results">
-        <h2>More like {searchTerm}</h2>
+  const renderRows = (movies, header) => {
+    return (
+      <div style={{ display: !_isEmpty(movies) ? "block" : "none" }}>
+        <h2>{`${header} ${searchTerm}`}</h2>
         <div>
           {!isLoaded
             ? ""
-            : movieDetails.slice(0, 10).map((movie, index) => {
+            : movies.map((movie, index) => {
                 return (
                   <div key={index} className="movie-card">
                     <img
@@ -140,49 +87,78 @@ export default function SimilarMovies() {
                 );
               })}
         </div>
-        <h2>From the people who brought you {searchTerm}</h2>
-        <div>
-          {!isLoaded
-            ? ""
-            : movieDetails.slice(10, 20).map((movie, index) => {
-                return (
-                  <div key={index} className="movie-card">
-                    <img
-                      alt=""
-                      src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-                      style={{
-                        display: movie.poster_path === null ? "none" : "block",
-                        width: "20rem",
-                      }}
-                    />
-                    <div className="info">
-                      <h4>{movie.title + " "}</h4>
-                      <p>
-                        {movie.overview.length > 300
-                          ? movie.overview.substring(0, 300) + "..."
-                          : movie.overview}
-                      </p>
-                      <div className="genres">
-                        {movie.genres === undefined || movie.genres.length === 0
-                          ? ""
-                          : movie.genres?.map((genre, key) => {
-                              return <span key={key}>{genre.name} | </span>;
-                            })}
-                      </div>
-                      <a
-                        href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{ textDecoration: "none" }}
-                      >
-                        <button className="button-grey">Parental Guide</button>
-                      </a>
-                    </div>
-                  </div>
-                );
-              })}
+      </div>
+    );
+  };
+
+  const renderSearchField = () => {
+    return (
+      <div className={`search-field ${isAnimating ? "animating" : ""}`}>
+        <input
+          type="text"
+          className={
+            searchTerm !== "" && suggestions.length !== 0 ? "textPresent" : ""
+          }
+          value={searchTerm}
+          onChange={(e) => handleChange(e)}
+        />
+        <div
+          className="suggestions suggestions-error"
+          style={{
+            display:
+              showingSuggestions && _isEmpty(suggestions) ? "block" : "none",
+          }}
+        >
+          <div className="title">No movies found</div>
+        </div>
+        <div
+          className="suggestions"
+          style={{
+            display:
+              showingSuggestions && !_isEmpty(suggestions) ? "block" : "none",
+          }}
+        >
+          {suggestions.map((movie, index) => {
+            return (
+              <div
+                key={index}
+                className="title"
+                onClick={() => {
+                  setSearchterm(movie.title);
+                  setSuggestions([]);
+                  setShowingSuggestions(false);
+                }}
+              >
+                {movie.title}
+              </div>
+            );
+          })}
+        </div>
+        <Button text="Search" onClick={() => fetchRecommendations()} />
+      </div>
+    );
+  };
+
+  const renderResults = () => {
+    return (
+      <div>
+        <div className="movie-results">
+          {renderRows(movieDetails.slice(0, 10), "More like")}
+          {renderRows(
+            movieDetails.slice(10, movieDetails.length),
+            "From the people who brought you"
+          )}
         </div>
       </div>
+    );
+  };
+
+  return (
+    <div>
+      {renderSearchField()}
+      {isLoaded ? renderResults() : null}
     </div>
   );
-}
+};
+
+export default withState(SimilarMovies, SIMILAR_MOVIE_ACTIONS);
