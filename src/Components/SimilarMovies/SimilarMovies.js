@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import _isEmpty from "lodash/isEmpty";
+import _filter from "lodash/filter";
+import _includes from "lodash/includes";
+import _map from "lodash/map";
 import withState from "../../Containers/withState/withState";
 import SIMILAR_MOVIE_ACTIONS from "./SimilarMovie.action";
 import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
@@ -19,8 +22,8 @@ const SimilarMovies = (props) => {
 
   const handleChange = (e) => {
     setSearchterm(e.target.value);
-    const sugg = movieData.filter((movie) =>
-      movie.title.toLowerCase().includes(e.target.value.toLowerCase())
+    const sugg = _filter(movieData, (movie) =>
+      _includes(movie.title.toLowerCase(), e.target.value.toLowerCase())
     );
     setSuggestions(sugg);
     setShowingSuggestions(true);
@@ -49,7 +52,7 @@ const SimilarMovies = (props) => {
         <div>
           {!isLoaded
             ? ""
-            : movies.map((movie, index) => {
+            : _map(movies, (movie, index) => {
                 return (
                   <div key={index} className="movie-card">
                     <img
@@ -91,17 +94,9 @@ const SimilarMovies = (props) => {
     );
   };
 
-  const renderSearchField = () => {
+  const renderSuggestionBox = () => {
     return (
-      <div className={`search-field ${isAnimating ? "animating" : ""}`}>
-        <input
-          type="text"
-          className={
-            searchTerm !== "" && suggestions.length !== 0 ? "textPresent" : ""
-          }
-          value={searchTerm}
-          onChange={(e) => handleChange(e)}
-        />
+      <div>
         <div
           className="suggestions suggestions-error"
           style={{
@@ -134,6 +129,22 @@ const SimilarMovies = (props) => {
             );
           })}
         </div>
+      </div>
+    );
+  };
+
+  const renderSearchField = () => {
+    return (
+      <div className={`search-field ${isAnimating ? "animating" : ""}`}>
+        <input
+          type="text"
+          className={
+            searchTerm !== "" && suggestions.length !== 0 ? "textPresent" : ""
+          }
+          value={searchTerm}
+          onChange={(e) => handleChange(e)}
+        />
+        {renderSuggestionBox()}
         <Button text="Search" onClick={() => fetchRecommendations()} />
       </div>
     );

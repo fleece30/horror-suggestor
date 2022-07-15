@@ -1,3 +1,7 @@
+@mixin font-family {
+    font-family: 'Poppins';
+}
+
 body {
     background-color: #1B1B1B;
     overflow: scroll;
@@ -31,13 +35,15 @@ body {
         border-radius: 0.4rem;
         outline: none;
         transition: 0.1s all;
-        font-family: "Poppins";
+        @include font-family;
     }
     
 }
 .suggestions {
     position: absolute;
     top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
     max-height: 300px;
     width: 100%;
     overflow: scroll;
@@ -74,7 +80,7 @@ body {
     &>div {
         h2 {
             color: #FDFDFD;
-            font-family: "Poppins";
+            @include font-family;
             margin-bottom: 1rem;
             font-style: italic;
         }
@@ -103,7 +109,7 @@ body {
                     transition: 0.3s all;
                     background-image: linear-gradient(to bottom, transparent, #000);
                     width: 100%;
-                    font-family: 'Poppins';
+                    @include font-family;
                     color: #FDFDFD;
                     h4 {
                         position: absolute;
@@ -130,8 +136,8 @@ body {
                 }
                 button {
                     margin-top: 0.8rem;
-                    padding: 0.5rem 0.8rem;
-                    font-family: 'Poppins';
+                    padding: 0.6rem 0.8rem;
+                    @include font-family;
                 }
             }
         }

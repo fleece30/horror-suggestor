@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import { Home } from "./Components/Home/Home";
-import Movie from './Components/Movie/Movie';
+import Movie from "./Components/Movie/Movie";
 import SimilarMovies from "./Components/SimilarMovies/SimilarMovies";
+import LikeTree from "./Components/LikeTree/LikeTree";
 
 import "./App.css";
 
@@ -13,6 +14,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="randommovies" element={<Movie />} />
         <Route path="searchsimilar" element={<SimilarMovies />} />
+        <Route path="liketree" element={<LikeTree />} />
       </Routes>
     </BrowserRouter>
   );

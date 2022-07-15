@@ -1,3 +1,7 @@
+@mixin font-family {
+    font-family: 'Poppins';
+}
+
 body {
     overflow: hidden;
 }
@@ -19,7 +23,7 @@ body {
     padding: 9rem 12rem;
     column-gap: 4rem;
     color: #FDFBF9;
-    font-family: 'Poppins';
+    @include font-family;
     h2 {
         margin: 0;
         font-weight: 700;
@@ -33,7 +37,7 @@ body {
     bottom: 1rem;
     right: 1rem;
     color: #FDFBF9;
-    font-family: 'Poppins';
+    @include font-family;
     // font-weight: bold;
     font-style: italic;
 }
@@ -44,7 +48,7 @@ body {
     background-color: #FDFBF9;
     opacity: 0.8;
     color: #1B1B1B;
-    font-family: "Poppins";
+    @include font-family;
     font-weight: bold;
     font-size: 1rem;
     border: 2px solid #FDFBF9;

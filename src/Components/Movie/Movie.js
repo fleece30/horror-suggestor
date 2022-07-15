@@ -4,7 +4,7 @@ import _isEmpty from "lodash/isEmpty";
 
 import withState from "../../Containers/withState/withState";
 import MOVIE_ACTIONS from "./Movie.action";
-import { MOVIE_ACTIONS_TYPES } from "./Movie.constant";
+import { MOVIE_ACTIONS_TYPES, strings } from "./Movie.constant";
 
 import "./Movie.scss";
 
@@ -15,8 +15,8 @@ const Movie = (props) => {
     onAction(MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const renderMoviePage = () => (
-    <div>
+  const renderOverlay = () => {
+    return (
       <div className="overlay">
         <div className="background">
           <img
@@ -29,6 +29,12 @@ const Movie = (props) => {
           />
         </div>
       </div>
+    );
+  };
+
+  const renderMoviePage = () => (
+    <div>
+      {renderOverlay()}
       <div className="movie-content">
         <img
           alt=""
@@ -76,12 +82,12 @@ const Movie = (props) => {
                 onAction(MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION)
               }
             >
-              Show me another
+              {strings.showAnother}
             </button>
           </div>
         </div>
       </div>
-      <div className="attribution">Powered by the TMDB API</div>
+      <div className="attribution">{strings.attribution}</div>
     </div>
   );
 

@@ -1,11 +1,12 @@
 import _get from "lodash/get";
+import _replace from "lodash/replace";
 
 import { fetchMovieData, fetchRecommendations } from "../../Services";
 import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
 
 const fetchReommendationsAction = async ({ payload }, { setState }) => {
   setState({ movieResults: [], movieDetails: [] });
-  const limitedTerm = payload.replace(" ", "+");
+  const limitedTerm = _replace(payload, " ", "+");
   const recommendations = await fetchRecommendations(limitedTerm);
   const recommendationsToSet = _get(recommendations, "data", {});
   const nonDuplicates = recommendationsToSet[1].filter(
