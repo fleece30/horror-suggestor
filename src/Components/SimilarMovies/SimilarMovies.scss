@@ -1,0 +1,105 @@
+@mixin font-family {
+    font-family: 'Poppins';
+}
+
+body {
+    background-color: #1B1B1B;
+    overflow: scroll;
+    // padding: 3rem 6rem;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+.search-field {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    row-gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    &.animating {
+        // transform: translate(-50%, 20%);
+        top: 20%;
+    }
+    input {
+        font-size: 3rem;
+        padding: 1rem 2rem;
+        background: transparent;
+        color: #FDFDFD;
+        background-color: #fdfdfd24;
+        border: none;
+        border-radius: 0.4rem;
+        outline: none;
+        transition: 0.1s all;
+        @include font-family;
+    }
+    
+}
+.suggestions {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 300px;
+    width: 100%;
+    overflow: scroll;
+    overflow-x: hidden;
+    background-color: #1B1B1B;
+    box-shadow: -9px -5px 10px 10px rgba(0, 0, 0, 0.1),8px 16px 10px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 0.4rem;
+    padding: 1rem 0;
+    z-index: 1;
+    &::-webkit-scrollbar {
+        display: none;
+    }
+    .title {
+        // margin-bottom: 1.5rem;
+        padding: 0.75rem 2.5rem;
+        color: #FDFDFD;
+        &:hover {
+            background-color: #fdfdfd24;
+            cursor: pointer;
+        }
+    }
+}
+
+.movie-results {
+    position: absolute;
+    max-width: calc(100% - 12rem);
+    padding: 3rem 6rem;
+    display: flex;
+    column-gap: 2rem;
+    row-gap: 3rem;
+    flex-direction: column;
+    margin-top: 15rem;
+    z-index: -1;
+    &>div {
+        h2 {
+            color: #FDFDFD;
+            @include font-family;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        &>div {
+            display: flex;
+            flex-direction: row;
+            column-gap: 2rem;
+            overflow-x: scroll;
+            &::-webkit-scrollbar {
+                display: none;
+            }
+            
+        }
+    }
+}
+
+@keyframes moveFieldUp {
+    100% {
+        transform: translateY(-20%);
+    }
+}

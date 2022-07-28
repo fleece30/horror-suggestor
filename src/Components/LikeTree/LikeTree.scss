@@ -1,0 +1,17 @@
+@mixin font-family {
+    font-family: 'Poppins';
+}
+
+.selected-movies {
+    display: flex;
+    flex-wrap: wrap;
+    @include font-family;
+    justify-content: center;
+    padding: 7rem 4rem;
+    padding-bottom: 7rem;
+    gap: 2rem;
+    .movie-item {
+        width: 20rem;
+        cursor: pointer;
+    }
+}

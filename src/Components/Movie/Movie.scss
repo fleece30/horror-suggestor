@@ -1,0 +1,55 @@
+@mixin font-family {
+    font-family: 'Poppins';
+}
+
+body {
+    overflow: hidden;
+}
+.overlay {
+    height: 100vh;
+    width: 100%;
+    background-color: black;
+    position: absolute;
+    z-index: -1;
+    filter: brightness(0.25);
+    .backgroundImage, .background {
+        height: 100%;
+        width: 100%;
+    }
+}
+
+.movie-content {
+    display: flex;
+    padding: 9rem 12rem;
+    column-gap: 4rem;
+    color: #FDFBF9;
+    @include font-family;
+    h2 {
+        margin: 0;
+        font-weight: 700;
+        font-style: italic;
+        font-size: 3rem;
+    }
+}
+
+.attribution {
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    color: #FDFBF9;
+    @include font-family;
+    // font-weight: bold;
+    font-style: italic;
+}
+
+.button-grey {
+    padding: 1rem 2rem;
+    border-radius: 1rem;
+    background-color: #FDFBF9;
+    opacity: 0.8;
+    color: #1B1B1B;
+    @include font-family;
+    font-weight: bold;
+    font-size: 1rem;
+    border: 2px solid #FDFBF9;
+}
