@@ -23,7 +23,12 @@ body {
     align-items: center;
     transition: all 0.5s;
     &.animating {
+<<<<<<< HEAD
         transform: translate(-50%, -25rem);
+=======
+        // transform: translate(-50%, 20%);
+        top: 20%;
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
     }
     input {
         font-size: 3rem;
@@ -92,6 +97,7 @@ body {
             &::-webkit-scrollbar {
                 display: none;
             }
+<<<<<<< HEAD
             .movie-card {
                 position: relative;
                 min-width: 20rem;
@@ -140,6 +146,9 @@ body {
                     @include font-family;
                 }
             }
+=======
+            
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
         }
     }
 }

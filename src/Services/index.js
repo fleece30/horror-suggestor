@@ -15,6 +15,10 @@ const fetchMovieData = async (movieId) =>
     `movie/${movieId}?api_key=${process.env.REACT_APP_dbKey}&language=en-US`
   );
 const fetchRecommendations = async (searchTerm) =>
+<<<<<<< HEAD
   await recommendationApiService.get(`getrecommendations?name=${searchTerm}`);
+=======
+  await recommendationApiService.get(`getrecommendations?tmdbId=${searchTerm}`);
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
 
 export { fetchMovieData, fetchRecommendations };

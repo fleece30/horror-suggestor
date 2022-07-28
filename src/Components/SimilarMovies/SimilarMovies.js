@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
+=======
+import React, { useState, useEffect, useRef } from "react";
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
 import _isEmpty from "lodash/isEmpty";
 import _filter from "lodash/filter";
 import _includes from "lodash/includes";
@@ -9,6 +13,11 @@ import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
 import { Button } from "../Button/Button";
 
 import "./SimilarMovies.scss";
+<<<<<<< HEAD
+=======
+import MovieCard from "../MovieCard/MovieCard";
+import Loader from "../Loader/Loader";
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
 
 const movieData = require("../../Assets/movies.json");
 
@@ -19,6 +28,11 @@ const SimilarMovies = (props) => {
   const [suggestions, setSuggestions] = useState([]);
   const [showingSuggestions, setShowingSuggestions] = useState(false);
   const [isAnimating, setAnimating] = useState(false);
+<<<<<<< HEAD
+=======
+  const [showLoader, setShowLoader] = useState(false);
+  const selectedId = useRef(0);
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
 
   const handleChange = (e) => {
     setSearchterm(e.target.value);
@@ -31,22 +45,39 @@ const SimilarMovies = (props) => {
 
   const fetchRecommendations = () => {
     if (!isAnimating) setAnimating(true);
+<<<<<<< HEAD
     onAction(
       SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION,
       searchTerm
+=======
+    setShowLoader(true);
+    onAction(
+      SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION,
+      selectedId.current
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
     );
   };
 
   useEffect(() => {
+<<<<<<< HEAD
     if (movieResults !== undefined && !_isEmpty(movieResults))
+=======
+    if (movieResults !== undefined && !_isEmpty(movieResults)) {
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
       onAction(
         SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION,
         movieResults
       );
+<<<<<<< HEAD
+=======
+      setShowLoader(false);
+    }
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
   }, [movieResults]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const renderRows = (movies, header) => {
     return (
+<<<<<<< HEAD
       <div style={{ display: !_isEmpty(movies) ? "block" : "none" }}>
         <h2>{`${header} ${searchTerm}`}</h2>
         <div>
@@ -88,6 +119,19 @@ const SimilarMovies = (props) => {
                     </div>
                   </div>
                 );
+=======
+      <div
+        style={{
+          display: !_isEmpty(movies) ? "block" : "none",
+        }}
+      >
+        <h2>{`${header} ${searchTerm}`}</h2>
+        <div style={{ overflowY: "hidden" }}>
+          {!isLoaded
+            ? ""
+            : _map(movies, (movie, index) => {
+                return <MovieCard movie={movie} key={index} />;
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
               })}
         </div>
       </div>
@@ -122,6 +166,10 @@ const SimilarMovies = (props) => {
                   setSearchterm(movie.title);
                   setSuggestions([]);
                   setShowingSuggestions(false);
+<<<<<<< HEAD
+=======
+                  selectedId.current = movie.tmdbId;
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
                 }}
               >
                 {movie.title}
@@ -168,6 +216,10 @@ const SimilarMovies = (props) => {
     <div>
       {renderSearchField()}
       {isLoaded ? renderResults() : null}
+<<<<<<< HEAD
+=======
+      {showLoader ? Loader() : null}
+>>>>>>> 1a01d78bc91a2818e940cc0715a6fb5f2f1a108f
     </div>
   );
 };
