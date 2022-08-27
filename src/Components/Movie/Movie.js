@@ -54,11 +54,11 @@ const Movie = (props) => {
               ? ""
               : movie.production_countries[0].name}
           </p>
-          {movie.genres === undefined || movie.genres.length === 0
-            ? ""
-            : movie.genres?.map((genre, key) => {
-                return <span key={key}>{genre.name} | </span>;
-              })}
+          {movie.genres === undefined || movie.genres.length === 0 ? (
+            ""
+          ) : (
+            <span>{movie.genres?.map((genre) => genre.name).join(" | ")}</span>
+          )}
           <p>{movie.overview}</p>
           <p>
             {movie.vote_average}/10 ({movie.vote_count} ratings)
