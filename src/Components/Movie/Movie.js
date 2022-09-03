@@ -4,7 +4,7 @@ import _isEmpty from "lodash/isEmpty";
 
 import withState from "../../Containers/withState/withState";
 import MOVIE_ACTIONS from "./Movie.action";
-import { MOVIE_ACTIONS_TYPES, strings } from "./Movie.constant";
+import { MOVIE_ACTIONS_TYPES, STRINGS } from "./Movie.constant";
 
 import "./Movie.scss";
 
@@ -14,6 +14,8 @@ const Movie = (props) => {
   useEffect(() => {
     onAction(MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  //Should not show "From" when there is no origin
 
   const renderOverlay = () => {
     return (
@@ -32,6 +34,52 @@ const Movie = (props) => {
     );
   };
 
+  const renderMovieInfo = () => {
+    return (
+      <div className="movie-info">
+        <h2>{movie.title}</h2>
+        <h3>{movie.release_date}</h3>
+        <p>
+          {movie.production_countries === undefined ||
+          movie.production_countries.length === 0
+            ? ""
+            : `From ${movie.production_countries[0].name}`}
+        </p>
+        {movie.genres === undefined || movie.genres.length === 0 ? (
+          ""
+        ) : (
+          <span>{movie.genres?.map((genre) => genre.name).join(" | ")}</span>
+        )}
+        <p>{movie.overview}</p>
+        <p>
+          {movie.vote_average}/10 ({movie.vote_count} ratings)
+        </p>
+        <div style={{ display: "flex", columnGap: "1rem" }}>
+          <a
+            href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <button className="button-grey">Parental Guide</button>
+          </a>
+          <button
+            style={{
+              background: "transparent",
+              color: "#FDFBF9",
+            }}
+            className="button-grey"
+            onClick={() =>
+              onAction(MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION)
+            }
+          >
+            {STRINGS.showAnother}
+          </button>
+        </div>
+      </div>
+    );
+  };
+
   const renderMoviePage = () => (
     <div>
       {renderOverlay()}
@@ -44,50 +92,9 @@ const Movie = (props) => {
             width: "20rem",
           }}
         />
-        <div className="movie-info">
-          <h2>{movie.title}</h2>
-          <h3>{movie.release_date}</h3>
-          <p>
-            From{" "}
-            {movie.production_countries === undefined ||
-            movie.production_countries.length === 0
-              ? ""
-              : movie.production_countries[0].name}
-          </p>
-          {movie.genres === undefined || movie.genres.length === 0 ? (
-            ""
-          ) : (
-            <span>{movie.genres?.map((genre) => genre.name).join(" | ")}</span>
-          )}
-          <p>{movie.overview}</p>
-          <p>
-            {movie.vote_average}/10 ({movie.vote_count} ratings)
-          </p>
-          <div style={{ display: "flex", columnGap: "1rem" }}>
-            <a
-              href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
-              target="_blank"
-              rel="noreferrer"
-              style={{ textDecoration: "none" }}
-            >
-              <button className="button-grey">Parental Guide</button>
-            </a>
-            <button
-              style={{
-                background: "transparent",
-                color: "#FDFBF9",
-              }}
-              className="button-grey"
-              onClick={() =>
-                onAction(MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION)
-              }
-            >
-              {strings.showAnother}
-            </button>
-          </div>
-        </div>
+        {renderMovieInfo()}
       </div>
-      <div className="attribution">{strings.attribution}</div>
+      <div className="attribution">{STRINGS.attribution}</div>
     </div>
   );
 

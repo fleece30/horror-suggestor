@@ -1,17 +1,9 @@
 import React from "react";
 import "./MovieCard.scss";
 
-const MovieCard = ({ movie }) => {
-  return (
-    <div className="movie-card">
-      <img
-        alt=""
-        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
-        style={{
-          display: movie.poster_path === null ? "none" : "block",
-          width: "20rem",
-        }}
-      />
+const MovieCard = ({ movie, showGuide = true }) => {
+  const renderInfo = () => {
+    return (
       <div className="info">
         <h4>{movie.title + " "}</h4>
         <div className="movie-information">
@@ -35,10 +27,28 @@ const MovieCard = ({ movie }) => {
             rel="noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <button className="button-grey">Parental Guide</button>
+            <button
+              className="button-grey"
+              style={{ display: showGuide ? "block" : "none" }}
+            >
+              Parental Guide
+            </button>
           </a>
         </div>
       </div>
+    );
+  };
+  return (
+    <div className="movie-card">
+      <img
+        alt=""
+        src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+        style={{
+          display: movie.poster_path === null ? "none" : "block",
+          width: "20rem",
+        }}
+      />
+      {renderInfo()}
     </div>
   );
 };

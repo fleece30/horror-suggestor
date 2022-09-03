@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import _map from "lodash/map";
+import _uniqueId from "lodash/uniqueId";
 import withState from "../../Containers/withState/withState";
 import { LIKE_TREE_ACTIONS_TYPES } from "./LikeTree.constant";
 import LIKE_TREE_ACTIONS from "./LikeTree.action";
@@ -33,49 +34,60 @@ const LikeTree = (props) => {
     setSelectedIndices([...selectedIndices, seenMovies.length + index]);
   };
 
-  const renderCards = () => {
+  const renderPlaylistButton = () => {
     return (
-      <div>
-        <div className="selected-movies">
-          {_map(movieDetails, (movie, index) => {
-            return (
-              <div
-                key={index}
-                className="movie-item"
-                style={{
-                  pointerEvents: movieDetails.length === 1 ? "none" : "auto",
-                }}
-                onClick={() => {
-                  addIndexToState(index);
-                  getSuggestions(movie.id);
-                }}
-              >
-                <MovieCard movie={movie} index={index} />
-              </div>
-            );
-          })}
-        </div>
-        <div
-          style={{
-            display: movieDetails.length === 1 ? "flex" : "none",
-            justifyContent: "center",
-            marginBottom: "3rem",
+      <div
+        style={{
+          display: movieDetails.length === 1 ? "flex" : "none",
+          justifyContent: "center",
+          marginBottom: "3rem",
+        }}
+      >
+        <Button
+          text={"Your Playlist"}
+          onClick={() => {
+            setSelectedIndices([...selectedIndices, seenMovies.length]);
+            setSeenMovies([...seenMovies, ...movieDetails]);
           }}
-        >
-          <Button
-            text={"Your Playlist"}
-            onClick={() => {
-              setSelectedIndices([...selectedIndices, seenMovies.length]);
-              setSeenMovies([...seenMovies, ...movieDetails]);
-              // addIndexToState(seenMovies.length);
-            }}
-          />
-        </div>
+        />
       </div>
     );
   };
 
-  return isLoaded ? renderCards() : Loader();
+  const renderMovies = () => {
+    return (
+      <div className="selected-movies">
+        {_map(movieDetails, (movie, index) => {
+          return (
+            <div
+              key={_uniqueId()}
+              className="movie-item"
+              style={{
+                pointerEvents: movieDetails.length === 1 ? "none" : "auto",
+              }}
+              onClick={() => {
+                addIndexToState(index);
+                getSuggestions(movie.id);
+              }}
+            >
+              <MovieCard movie={movie} index={index} showGuide={false} />
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
+  const renderCards = () => {
+    return (
+      <div>
+        {renderMovies()}
+        {renderPlaylistButton()}
+      </div>
+    );
+  };
+
+  return isLoaded ? renderCards() : <Loader />;
 };
 
 export default withState(LikeTree, LIKE_TREE_ACTIONS, {

@@ -1,4 +1,5 @@
 import React from "react";
+import { STRINGS } from "./Loader.constant";
 import "./Loader.scss";
 
 const Loader = () => {
@@ -10,7 +11,7 @@ const Loader = () => {
           alt="Horror clip"
         />
       </div>
-      <div>Loading some spookiness...</div>
+      <div>{STRINGS.loadingText}</div>
     </div>
   );
 };

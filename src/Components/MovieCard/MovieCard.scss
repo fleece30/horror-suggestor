@@ -32,6 +32,9 @@
             opacity: 0;
             left: 0;
             padding: 0 1rem;
+            p {
+                line-height: 0;
+            }
             * {
                 height: 0;
             }
@@ -48,6 +51,9 @@
             opacity: 1;
             transition: 600ms opacity;
             transition-delay: 100ms;
+            p {
+                line-height: normal;
+            }
             * {
                 height: 100%;
             }

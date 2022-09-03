@@ -1,21 +1,21 @@
 import _get from "lodash/get";
+import _map from "lodash/map";
 
 import { fetchMovieData, fetchRecommendations } from "../../Services";
 import { LIKE_TREE_ACTIONS_TYPES } from "./LikeTree.constant";
 import movieData from "../../Assets/movies.json";
 
 const fetchRandomMoviesAction = async (_, { setState }) => {
-  let movies = [];
   const shuffledMovieData = movieData.sort(() => 0.5 - Math.random());
   const selectedMovies = shuffledMovieData.slice(0, 10);
-  for (var i of selectedMovies) {
-    const movieData = await fetchMovieData(i.tmdbId);
-    const movieDataToSet = _get(movieData, "data", {});
-    movies.push(movieDataToSet);
-  }
+
+  const movies = await Promise.all(
+    _map(selectedMovies, (movie) => fetchMovieData(_get(movie, "tmdbId")))
+  );
+  const movieDetails = _map(movies, (movie) => _get(movie, "data", {}));
   setState({
     isLoaded: true,
-    movieDetails: movies,
+    movieDetails,
     seenMovies: movies,
     selectedIndices: [],
   });

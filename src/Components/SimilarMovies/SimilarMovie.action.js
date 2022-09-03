@@ -1,5 +1,6 @@
 import _get from "lodash/get";
 import _replace from "lodash/replace";
+import _foreach from "lodash/forEach";
 
 import { fetchMovieData, fetchRecommendations } from "../../Services";
 import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
@@ -9,12 +10,11 @@ const fetchReommendationsAction = async ({ payload }, { setState }) => {
   const limitedTerm = _replace(payload, " ", "+");
   const recommendations = await fetchRecommendations(limitedTerm);
   const recommendationsToSet = _get(recommendations, "data", {});
-  const nonDuplicates = recommendationsToSet[1].filter(
-    (id) => !recommendationsToSet[0].includes(id)
-  );
-  recommendationsToSet.pop();
-  recommendationsToSet.push(nonDuplicates);
-  setState({ movieResults: recommendationsToSet });
+  const movieSet = new Set();
+  _foreach(recommendationsToSet, (value) => {
+    movieSet.add(value);
+  });
+  setState({ movieResults: Array.from(movieSet) });
 };
 
 const fetchMoviesFromCodeAction = async ({ payload }, { setState }) => {

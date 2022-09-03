@@ -3,6 +3,7 @@ import _isEmpty from "lodash/isEmpty";
 import _filter from "lodash/filter";
 import _includes from "lodash/includes";
 import _map from "lodash/map";
+import _uniqueId from "lodash/uniqueId";
 import withState from "../../Containers/withState/withState";
 import SIMILAR_MOVIE_ACTIONS from "./SimilarMovie.action";
 import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
@@ -43,7 +44,7 @@ const SimilarMovies = (props) => {
   };
 
   useEffect(() => {
-    if (movieResults !== undefined && !_isEmpty(movieResults)) {
+    if (!_isEmpty(movieResults)) {
       onAction(
         SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_MOVIE_DATA_ACTION,
         movieResults
@@ -64,7 +65,7 @@ const SimilarMovies = (props) => {
           {!isLoaded
             ? ""
             : _map(movies, (movie, index) => {
-                return <MovieCard movie={movie} key={index} />;
+                return <MovieCard movie={movie} key={_uniqueId} />;
               })}
         </div>
       </div>
@@ -93,7 +94,7 @@ const SimilarMovies = (props) => {
           {suggestions.map((movie, index) => {
             return (
               <div
-                key={index}
+                key={_uniqueId()}
                 className="title"
                 onClick={() => {
                   setSearchterm(movie.title);
