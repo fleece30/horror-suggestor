@@ -58,7 +58,6 @@ body {
         display: none;
     }
     .title {
-        // margin-bottom: 1.5rem;
         padding: 0.75rem 2.5rem;
         color: #FDFDFD;
         &:hover {
@@ -90,10 +89,18 @@ body {
             flex-direction: row;
             column-gap: 2rem;
             overflow-x: scroll;
+            padding: 1em 0;
             &::-webkit-scrollbar {
-                display: none;
+                height: 0.6em;
             }
-            
+            &::-webkit-scrollbar-thumb {
+                background-color: rgb(116, 116, 116);
+                border-radius: 1em;
+            }
+            &::-webkit-scrollbar-track {
+                background-color: rgba(0,0,0,0.4);
+                border-radius: 1em;
+            }
         }
     }
 }

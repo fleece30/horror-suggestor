@@ -6,8 +6,8 @@ import { LIKE_TREE_ACTIONS_TYPES } from "./LikeTree.constant";
 import movieData from "../../Assets/movies.json";
 
 const fetchRandomMoviesAction = async (_, { setState }) => {
-  const shuffledMovieData = movieData.sort(() => 0.5 - Math.random());
-  const selectedMovies = shuffledMovieData.slice(0, 10);
+  const shuffledMovieData = _.sort(movieData, () => 0.5 - Math.random());
+  const selectedMovies = _.slice(shuffledMovieData, 0, 10);
 
   const movies = await Promise.all(
     _map(selectedMovies, (movie) => fetchMovieData(_get(movie, "tmdbId")))
@@ -21,7 +21,7 @@ const fetchRandomMoviesAction = async (_, { setState }) => {
   });
 };
 
-const fetchReommendationsAction = async ({ payload }, { setState }) => {
+const fetchRecommendationsAction = async ({ payload }, { setState }) => {
   let movies = [];
   let items = 0;
   const { movieId, expectedLength, seenMovies } = payload;
@@ -45,7 +45,7 @@ const fetchReommendationsAction = async ({ payload }, { setState }) => {
 const LIKE_TREE_ACTIONS = {
   [LIKE_TREE_ACTIONS_TYPES.FETCH_RANDOM_MOVIE_IDS]: fetchRandomMoviesAction,
   [LIKE_TREE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION]:
-    fetchReommendationsAction,
+    fetchRecommendationsAction,
 };
 
 export default LIKE_TREE_ACTIONS;

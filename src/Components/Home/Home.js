@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { options } from "./home.constants";
 
 import "./Home.scss";
+import _ from "lodash";
 
 export function Home() {
   const [selectedCardIndex, setCardIndex] = useState(-1);
@@ -19,7 +20,7 @@ export function Home() {
     return (
       <div key={_uniqueId()} onClick={() => setCardIndex(index)}>
         <Card
-          name={option.name}
+          name={_.get(option, "name", "")}
           class={selectedCardIndex === index ? "activated" : ""}
         />
       </div>

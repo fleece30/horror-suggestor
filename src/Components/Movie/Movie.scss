@@ -44,12 +44,11 @@ body {
 
 .button-grey {
     padding: 1rem 2rem;
-    border-radius: 1rem;
-    background-color: #FDFBF9;
+    border-radius: 0.6rem;
     opacity: 0.8;
     color: #1B1B1B;
     @include font-family;
     font-weight: bold;
     font-size: 1rem;
-    border: 2px solid #FDFBF9;
+    border: 2px solid rgba(255, 63, 52, 0.3);
 }

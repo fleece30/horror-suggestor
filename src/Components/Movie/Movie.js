@@ -6,6 +6,8 @@ import withState from "../../Containers/withState/withState";
 import MOVIE_ACTIONS from "./Movie.action";
 import { MOVIE_ACTIONS_TYPES, STRINGS } from "./Movie.constant";
 
+import { Button } from "../Button/Button";
+
 import "./Movie.scss";
 
 const Movie = (props) => {
@@ -61,12 +63,14 @@ const Movie = (props) => {
             rel="noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <button className="button-grey">Parental Guide</button>
+            {/* <button className="button-grey">Parental Guide</button> */}
+            <Button text="Parental Guide" />
           </a>
           <button
             style={{
               background: "transparent",
-              color: "#FDFBF9",
+              color: "rgba(255, 63, 52, 1)",
+              fontWeight: "900",
             }}
             className="button-grey"
             onClick={() =>

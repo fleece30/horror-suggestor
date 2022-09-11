@@ -56,6 +56,7 @@ const SimilarMovies = (props) => {
   const renderRows = (movies, header) => {
     return (
       <div
+        className="row"
         style={{
           display: !_isEmpty(movies) ? "block" : "none",
         }}
@@ -65,7 +66,7 @@ const SimilarMovies = (props) => {
           {!isLoaded
             ? ""
             : _map(movies, (movie, index) => {
-                return <MovieCard movie={movie} key={_uniqueId} />;
+                return <MovieCard movie={movie} key={index} />;
               })}
         </div>
       </div>

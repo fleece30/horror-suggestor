@@ -13,7 +13,7 @@
         transform: translate(-50%, -50%);
         text-align: center;
         h1 {
-            color: orange;
+            color: rgba(255, 63, 52,1.0);
             margin-bottom: 5rem;
             font-weight: 700;
             font-style: italic;
@@ -29,12 +29,6 @@
         }
         .button {
             opacity: 0;
-            button {
-                cursor: pointer;
-                padding: 1rem 3rem;
-                background-color: orange;
-                border-radius: 3rem;
-            }
             &.animatingButton {
                 animation: animateButton 0.4s 0.3s linear forwards;
             }

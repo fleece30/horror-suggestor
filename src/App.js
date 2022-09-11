@@ -15,7 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="randommovies" element={<Movie />} />
         <Route path="searchsimilar" element={<SimilarMovies />} />
-        <Route path="liketree" element={<LikeTree />} />
+        {/* <Route path="liketree" element={<LikeTree />} /> */}
         <Route path="loader" element={<Loader />} />
       </Routes>
     </BrowserRouter>

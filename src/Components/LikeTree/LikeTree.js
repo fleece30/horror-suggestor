@@ -14,7 +14,7 @@ const LikeTree = (props) => {
   const { movieDetails, isLoaded = false, onAction } = props;
   const numberOfResults = useRef(16);
   const [seenMovies, setSeenMovies] = useState([]);
-  const [selectedIndices, setSelectedIndices] = useState([]);
+  const [selectedMovies, setSelectedMovies] = useState([]);
 
   useEffect(() => {
     onAction(LIKE_TREE_ACTIONS_TYPES.FETCH_RANDOM_MOVIE_IDS);
@@ -30,10 +30,6 @@ const LikeTree = (props) => {
     setSeenMovies([...seenMovies, ...movieDetails]);
   };
 
-  const addIndexToState = (index) => {
-    setSelectedIndices([...selectedIndices, seenMovies.length + index]);
-  };
-
   const renderPlaylistButton = () => {
     return (
       <div
@@ -46,8 +42,8 @@ const LikeTree = (props) => {
         <Button
           text={"Your Playlist"}
           onClick={() => {
-            setSelectedIndices([...selectedIndices, seenMovies.length]);
             setSeenMovies([...seenMovies, ...movieDetails]);
+            setSelectedMovies([...selectedMovies, movieDetails[0]]);
           }}
         />
       </div>
@@ -66,7 +62,8 @@ const LikeTree = (props) => {
                 pointerEvents: movieDetails.length === 1 ? "none" : "auto",
               }}
               onClick={() => {
-                addIndexToState(index);
+                // addIndexToState(index);
+                setSelectedMovies([...selectedMovies, movie]);
                 getSuggestions(movie.id);
               }}
             >
@@ -92,5 +89,4 @@ const LikeTree = (props) => {
 
 export default withState(LikeTree, LIKE_TREE_ACTIONS, {
   seenMovies: [],
-  selectedIndices: [],
 });
