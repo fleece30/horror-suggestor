@@ -24,6 +24,7 @@ const SimilarMovies = (props) => {
   const [isAnimating, setAnimating] = useState(false);
   const [showLoader, setShowLoader] = useState(false);
   const selectedId = useRef(0);
+  const resultCount = useRef(10);
 
   const handleChange = (e) => {
     setSearchterm(e.target.value);
@@ -37,10 +38,10 @@ const SimilarMovies = (props) => {
   const fetchRecommendations = () => {
     if (!isAnimating) setAnimating(true);
     setShowLoader(true);
-    onAction(
-      SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION,
-      selectedId.current
-    );
+    onAction(SIMILAR_MOVIE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION, {
+      movieId: selectedId.current,
+      resultCount: resultCount.current,
+    });
   };
 
   useEffect(() => {
@@ -126,11 +127,21 @@ const SimilarMovies = (props) => {
         />
         {renderSuggestionBox()}
         <div style={{ display: "flex", columnGap: "1em" }}>
-          <Button text="Search" onClick={() => fetchRecommendations()} />
+          <Button
+            text="Search"
+            onClick={() => {
+              resultCount.current = 10;
+              fetchRecommendations();
+            }}
+          />
           <Button
             text="View more"
-            hidden={!showingSuggestions}
-            onClick={() => fetchRecommendations()}
+            hidden={resultCount.current === 30 || !isLoaded}
+            onClick={() => {
+              // setShowButton(false);
+              resultCount.current = 30;
+              fetchRecommendations();
+            }}
           />
         </div>
       </div>
@@ -141,9 +152,9 @@ const SimilarMovies = (props) => {
     return (
       <div>
         <div className="movie-results">
-          {renderRows(movieDetails.slice(0, 10), "More like")}
+          {renderRows(movieDetails.slice(0, resultCount.current), "More like")}
           {renderRows(
-            movieDetails.slice(10, movieDetails.length),
+            movieDetails.slice(resultCount.current, movieDetails.length),
             "From the people who brought you"
           )}
         </div>

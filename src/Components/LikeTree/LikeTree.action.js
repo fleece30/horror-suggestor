@@ -1,13 +1,16 @@
 import _get from "lodash/get";
 import _map from "lodash/map";
+import _sortBy from "lodash/sortBy";
+import _slice from "lodash/slice";
+import _reduce from "lodash/reduce";
 
 import { fetchMovieData, fetchRecommendations } from "../../Services";
 import { LIKE_TREE_ACTIONS_TYPES } from "./LikeTree.constant";
 import movieData from "../../Assets/movies.json";
 
 const fetchRandomMoviesAction = async (_, { setState }) => {
-  const shuffledMovieData = _.sort(movieData, () => 0.5 - Math.random());
-  const selectedMovies = _.slice(shuffledMovieData, 0, 10);
+  const shuffledMovieData = _sortBy(movieData, () => 0.5 - Math.random());
+  const selectedMovies = _slice(shuffledMovieData, 0, 10);
 
   const movies = await Promise.all(
     _map(selectedMovies, (movie) => fetchMovieData(_get(movie, "tmdbId")))
@@ -22,22 +25,23 @@ const fetchRandomMoviesAction = async (_, { setState }) => {
 };
 
 const fetchRecommendationsAction = async ({ payload }, { setState }) => {
-  let movies = [];
-  let items = 0;
-  const { movieId, expectedLength, seenMovies } = payload;
+  const { movieId, expectedLength } = payload;
   setState({ movieDetails: [] });
-  const recommendations = await fetchRecommendations(movieId);
+  const recommendations = await fetchRecommendations(movieId, 20);
   const recommendationsToSet = _get(recommendations, "data", {});
-  for (let i of recommendationsToSet[0]) {
-    if (items === expectedLength) break;
-    if (seenMovies.some((movie) => movie.id === i)) continue;
-    items++;
-    const movieData = await fetchMovieData(i);
-    const movieDataToSet = _get(movieData, "data", {});
-    movies.push(movieDataToSet);
-  }
+  let movies = await _reduce(
+    _sortBy(recommendationsToSet[0], () => 0.5 - Math.random()),
+    async (acc, currentMovie) => {
+      let accumulatorArray = await acc;
+      const movieData = await fetchMovieData(currentMovie);
+      const movieItem = _get(movieData, "data", {});
+      accumulatorArray.push(movieItem);
+      return accumulatorArray;
+    },
+    Promise.resolve([])
+  );
   setState({
-    movieDetails: movies,
+    movieDetails: _slice(movies, 0, expectedLength),
     isLoaded: true,
   });
 };

@@ -5,6 +5,7 @@ import withState from "../../Containers/withState/withState";
 import { LIKE_TREE_ACTIONS_TYPES } from "./LikeTree.constant";
 import LIKE_TREE_ACTIONS from "./LikeTree.action";
 import MovieCard from "../MovieCard/MovieCard";
+import MovieFlexView from "../MovieFlexView/MovieFlexView";
 import Loader from "../Loader/Loader";
 import { Button } from "../Button/Button";
 
@@ -13,8 +14,9 @@ import "./LikeTree.scss";
 const LikeTree = (props) => {
   const { movieDetails, isLoaded = false, onAction } = props;
   const numberOfResults = useRef(16);
-  const [seenMovies, setSeenMovies] = useState([]);
+  // const [seenMovies, setSeenMovies] = useState([]);
   const [selectedMovies, setSelectedMovies] = useState([]);
+  const [showCarousel, setShowCarousel] = useState(false);
 
   useEffect(() => {
     onAction(LIKE_TREE_ACTIONS_TYPES.FETCH_RANDOM_MOVIE_IDS);
@@ -25,9 +27,9 @@ const LikeTree = (props) => {
     onAction(LIKE_TREE_ACTIONS_TYPES.FETCH_RECOMMENDATIONS_ACTION, {
       movieId,
       expectedLength: numberOfResults.current,
-      seenMovies,
+      // seenMovies,
     });
-    setSeenMovies([...seenMovies, ...movieDetails]);
+    // setSeenMovies([...seenMovies, ...movieDetails]);
   };
 
   const renderPlaylistButton = () => {
@@ -42,8 +44,9 @@ const LikeTree = (props) => {
         <Button
           text={"Your Playlist"}
           onClick={() => {
-            setSeenMovies([...seenMovies, ...movieDetails]);
+            // setSeenMovies([...seenMovies, ...movieDetails]);
             setSelectedMovies([...selectedMovies, movieDetails[0]]);
+            setShowCarousel(true);
           }}
         />
       </div>
@@ -80,6 +83,7 @@ const LikeTree = (props) => {
       <div>
         {renderMovies()}
         {renderPlaylistButton()}
+        {showCarousel ? <MovieFlexView movies={selectedMovies} /> : null}
       </div>
     );
   };
@@ -87,6 +91,4 @@ const LikeTree = (props) => {
   return isLoaded ? renderCards() : <Loader />;
 };
 
-export default withState(LikeTree, LIKE_TREE_ACTIONS, {
-  seenMovies: [],
-});
+export default withState(LikeTree, LIKE_TREE_ACTIONS);

@@ -33,7 +33,7 @@ export function Home() {
   return (
     <div className="home-body">
       <div className="main-body">
-        <h1>Welcome to Horror Suggestor</h1>
+        <h1>Welcome to Spookydeck</h1>
         <div
           className={`options ${selectedCardIndex === -1 ? "" : "animating"}`}
         >
