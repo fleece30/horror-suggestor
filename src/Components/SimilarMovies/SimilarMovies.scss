@@ -3,7 +3,7 @@
 }
 
 body {
-    background-color: #1B1B1B;
+    background-color: #111;
     overflow: scroll;
     // padding: 3rem 6rem;
     &::-webkit-scrollbar {
@@ -31,7 +31,7 @@ body {
         padding: 1rem 2rem;
         background: transparent;
         color: #FDFDFD;
-        background-color: #fdfdfd24;
+        background-color: #8e8e8e24;
         border: none;
         border-radius: 0.4rem;
         outline: none;
@@ -88,7 +88,8 @@ body {
             display: flex;
             flex-direction: row;
             column-gap: 2rem;
-            overflow-x: scroll;
+            flex-wrap: wrap;
+            row-gap: 1em;
             padding: 1em 0;
             &::-webkit-scrollbar {
                 height: 0.6em;

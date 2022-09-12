@@ -22,16 +22,16 @@ const MovieCard = ({ movie, showGuide = true }) => {
             )}
           </div>
           <a
-            href={`https://www.imdb.com/title/${movie.imdb_id}/parentalguide`}
+            href={`https://www.imdb.com/title/${movie.imdb_id}/reviews`}
             target="_blank"
             rel="noreferrer"
             style={{ textDecoration: "none" }}
           >
             <button
-              className="button-grey"
+              // className="button-grey"
               style={{ display: showGuide ? "block" : "none" }}
             >
-              Parental Guide
+              Reviews
             </button>
           </a>
         </div>

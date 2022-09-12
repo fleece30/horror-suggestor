@@ -1,18 +1,17 @@
 import _get from "lodash/get";
-import _replace from "lodash/replace";
-// import _foreach from "lodash/forEach";
 import _uniq from "lodash/uniq";
 import _flatten from "lodash/flatten";
 import _reduce from "lodash/reduce";
-// import _values from "lodash/values";
 
 import { fetchMovieData, fetchRecommendations } from "../../Services";
 import { SIMILAR_MOVIE_ACTIONS_TYPES } from "./SimilarMovies.constant";
 
 const fetchRecommendationsAction = async ({ payload }, { setState }) => {
   setState({ movieResults: [], movieDetails: [] });
-  const limitedTerm = _replace(payload, " ", "+");
-  const recommendations = await fetchRecommendations(limitedTerm);
+  const recommendations = await fetchRecommendations(
+    payload.movieId,
+    payload.resultCount
+  );
   const recommendationsToSet = _uniq(
     _flatten(_get(recommendations, "data", {}))
   );

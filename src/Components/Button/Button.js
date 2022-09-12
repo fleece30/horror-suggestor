@@ -1,6 +1,10 @@
 import React from "react";
 import "./Button.scss";
 
-export function Button(props) {
-  return <button onClick={props.onClick}>{props.text}</button>;
+export function Button({ hidden = false, onClick, text }) {
+  return (
+    <button style={{ display: hidden ? "none" : "inline" }} onClick={onClick}>
+      {text}
+    </button>
+  );
 }
