@@ -1,12 +1,17 @@
 button {
     cursor: pointer;
     padding: 1rem 3rem;
-    background-color: orange;
-    border-radius: 3rem;
+    background-color: rgba(255, 63, 52,0.2);
+    color: rgba(255, 63, 52,1.0);
+    border-radius: 0.7em;
     font-family: "Poppins";
     font-weight: bold;
     font-size: 1.1rem;
     width: fit-content;
     outline: none;
     border: none;
+    transition: 0.4s all;
+    &:hover {
+        background-color: rgba(255, 63, 52, 0.3);
+    }
 }

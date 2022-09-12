@@ -1,0 +1,23 @@
+@mixin font-family {
+    font-family: 'Poppins';
+    font-size: 1rem;
+    color: #FDFDFD;
+    font-style: italic;
+}
+.center-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    @include font-family;
+    .gif {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 1rem;
+        img {
+            max-width: 20rem;
+        }
+    }
+}

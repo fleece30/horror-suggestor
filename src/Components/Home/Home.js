@@ -1,27 +1,35 @@
 import React, { useState } from "react";
 
-import _map from 'lodash/map';
+import _map from "lodash/map";
+import _uniqueId from "lodash/uniqueId";
 
 import { Button } from "../Button/Button";
 import { Card } from "../Card/Card";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-import { options } from './home.constants';
+import { options } from "./home.constants";
 
 import "./Home.scss";
+import _ from "lodash";
 
 export function Home() {
   const [selectedCardIndex, setCardIndex] = useState(-1);
+  const navigate = useNavigate();
 
-  const renderMovieOptions = options => _map(options, (option, index) => (
-      <div key={index} onClick={() => setCardIndex(index)}>
+  const renderOption = (option, index) => {
+    return (
+      <div key={_uniqueId()} onClick={() => setCardIndex(index)}>
         <Card
-            name={option.name}
-            class={selectedCardIndex === index ? "activated" : ""}
+          name={_.get(option, "name", "")}
+          class={selectedCardIndex === index ? "activated" : ""}
         />
       </div>
-  ));
-  // , "Your Picks"
+    );
+  };
+
+  const renderMovieOptions = (options) =>
+    _map(options, (option, index) => renderOption(option, index));
+
   return (
     <div className="home-body">
       <div className="main-body">
@@ -36,11 +44,14 @@ export function Home() {
             selectedCardIndex === -1 ? "" : "animatingButton"
           }`}
         >
-          <Link
-            to={selectedCardIndex === -1 ? "" : options[selectedCardIndex].link}
-          >
-            <Button text="PROCEED" />
-          </Link>
+          <Button
+            text="PROCEED"
+            onClick={() =>
+              navigate(
+                selectedCardIndex === -1 ? "" : options[selectedCardIndex].link
+              )
+            }
+          />
         </div>
       </div>
     </div>
