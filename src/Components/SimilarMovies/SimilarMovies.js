@@ -125,7 +125,14 @@ const SimilarMovies = (props) => {
           onChange={(e) => handleChange(e)}
         />
         {renderSuggestionBox()}
-        <Button text="Search" onClick={() => fetchRecommendations()} />
+        <div style={{ display: "flex", columnGap: "1em" }}>
+          <Button text="Search" onClick={() => fetchRecommendations()} />
+          <Button
+            text="View more"
+            hidden={!showingSuggestions}
+            onClick={() => fetchRecommendations()}
+          />
+        </div>
       </div>
     );
   };
