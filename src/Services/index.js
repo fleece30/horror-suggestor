@@ -6,7 +6,7 @@ const movieApiService = axios.create({
 });
 
 const recommendationApiService = axios.create({
-  baseURL: "https://getrec.herokuapp.com",
+  baseURL: "https://recommendationapi-production.up.railway.app",
   timeout: 60000,
 });
 
