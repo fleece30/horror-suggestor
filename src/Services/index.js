@@ -6,7 +6,7 @@ const movieApiService = axios.create({
 });
 
 const recommendationApiService = axios.create({
-  baseURL: "https://recommendationapi-production.up.railway.app",
+  baseURL: "https://getrec-6wpud.ondigitalocean.app",
   timeout: 60000,
 });
 
